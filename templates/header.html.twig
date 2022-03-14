@@ -1,0 +1,23 @@
+<header class="site-header">
+    <div class="site-logo">BankUpp</div>
+    <div class="site-menu">
+        <a href="#" class="menu-tile">Nasz bank</a>
+        {% if is_granted('ROLE_BANK_USER') %}
+        <a href="#" class="menu-tile">Moje konto</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="#" class="menu-tile">Zarządaj</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('app_logout') }}" class="menu-tile">Wyloguj</a>
+        {% endif %}
+
+        {% if not is_granted('ROLE_USER') %}
+        <a href="{{ path('app_login') }}" class="menu-tile">Zaloguj się</a>
+        <a href="{{ path('app_register') }}" class="menu-tile">Zarejestruj się</a>
+        {% endif %}
+
+    </div>
+</header>
