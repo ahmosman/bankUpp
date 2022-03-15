@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BankerController!{% endblock %}
+
+{% block body %}
+    <section>
+        <h1>Zarządzaj użytkownikami</h1>
+    </section>
+
+    <div class="manage-users-container">
+        <table class="manage-users-table">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Adres</th>
+                <th>Kod pocztowy</th>
+                <th>Miasto</th>
+            </tr>
+            {% for user in bankUsers %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.address.address }}</td>
+                    <td>{{ user.address.postalCode }}</td>
+                    <td>{{ user.address.city }}</td>
+                    <td>
+                        <a href="{{ path('app_user_crud_edit', {id: user.id}) }}">Zmień dane</a>
+                        <a href="{{ path('app_user_crud_show', {id: user.id}) }}">Wyświetl konta</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Nie znaleziono użytkowników.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path('app_banker_add_user') }}">Dodaj użytkownika</a>
+    </div>
+{% endblock %}

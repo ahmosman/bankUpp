@@ -9,8 +9,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email', 'Pesel'], message: 'Konto z podanym adresem e-mail już istnieje')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Konto z podanym adresem e-mail już istnieje')]
+#[UniqueEntity(fields: ['pesel'], message: 'Konto z podanym peselem już istnieje')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -28,20 +28,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\Column(type: 'string', length: 55)]
-    private $FirstName;
+    private $firstName;
 
     #[ORM\Column(type: 'string', length: 55)]
-    private $LastName;
+    private $lastName;
 
     #[ORM\Column(type: 'string', length: 11, unique: true)]
-    private $Pesel;
+    private $pesel;
 
     #[ORM\Column(type: 'string', length: 15)]
-    private $PhoneNumber;
+    private $phoneNumber;
 
-    #[ORM\ManyToOne(targetEntity: UserAddress::class, inversedBy: 'users')]
+    #[ORM\ManyToOne(targetEntity: UserAddress::class, cascade: ['persist'], inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
-    private $Address;
+    private $address;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -137,60 +137,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFirstName(): ?string
     {
-        return $this->FirstName;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $FirstName): self
+    public function setFirstName(string $firstName): self
     {
-        $this->FirstName = $FirstName;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->LastName;
+        return $this->lastName;
     }
 
-    public function setLastName(string $LastName): self
+    public function setLastName(string $lastName): self
     {
-        $this->LastName = $LastName;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
     public function getPesel(): ?string
     {
-        return $this->Pesel;
+        return $this->pesel;
     }
 
-    public function setPesel(string $Pesel): self
+    public function setPesel(string $pesel): self
     {
-        $this->Pesel = $Pesel;
+        $this->pesel = $pesel;
 
         return $this;
     }
 
     public function getPhoneNumber(): ?string
     {
-        return $this->PhoneNumber;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $PhoneNumber): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->PhoneNumber = $PhoneNumber;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     public function getAddress(): ?UserAddress
     {
-        return $this->Address;
+        return $this->address;
     }
 
-    public function setAddress(?UserAddress $Address): self
+    public function setAddress(?UserAddress $address): self
     {
-        $this->Address = $Address;
+        $this->address = $address;
 
         return $this;
     }

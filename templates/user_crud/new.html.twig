@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1>Dodaj użytkownika</h1>
+
+    {{ include('user_crud/_form.html.twig') }}
+    <p>Użytkownik zostanie automatycznie zweryfikowany</p>
+    <a href="{{ path('app_user_crud_index') }}">Powrót do listy</a>
+{% endblock %}

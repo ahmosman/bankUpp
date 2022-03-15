@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Hasło</th>#}
+{#                <td>{{ user.password }}</td>#}
+{#            </tr>#}
+            <tr>
+                <th>Imię</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Nazwisko</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Pesel</th>
+                <td>{{ user.pesel }}</td>
+            </tr>
+            <tr>
+                <th>Numer telefonu</th>
+                <td>{{ user.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>Zweryfikowano</th>
+                <td>{{ user.isVerified ? 'Tak' : 'Nie' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path(managementRoute) }}">Powrót do listy</a>
+
+    <a href="{{ path('app_user_crud_edit', {'id': user.id}) }}">Edytuj</a>
+
+    {{ include('user_crud/_delete_form.html.twig') }}
+{% endblock %}

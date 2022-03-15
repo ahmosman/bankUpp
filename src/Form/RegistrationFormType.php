@@ -37,12 +37,12 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('pesel', IntegerType::class, [
+            ->add('pesel', NumberType::class, [
 
                 'label' => 'Pesel',
                 'attr' => [
-                    'min' => 10000000000,
-                    'max' => 99999999999
+                    'minLength' => 11,
+                    'maxLength' => 11
                 ],
                 'constraints' => [
                     new NotBlank([

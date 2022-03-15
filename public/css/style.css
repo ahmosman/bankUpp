@@ -1,6 +1,6 @@
 *{
   margin: 0 auto;
-  font-size: 16px;
+  font-size: 18px;
   font-family: 'Maven Pro', sans-serif;
 }
 
@@ -8,6 +8,19 @@ body {
   background: #6d4aa9;
   display: flex;
   flex-direction: column;
+}
+main{
+  margin: auto 170px;
+}
+a{
+  text-decoration: none;
+}
+h1{
+  color: #a4a415;
+  font-size: 2em;
+}
+section{
+  margin: 30px 0;
 }
 .site-header{
   display: flex;
@@ -20,14 +33,36 @@ body {
   font-family: 'Faster One', sans-serif;
   font-size: 60px;
   margin-right: auto;
+  color: #a4a415;
 }
 .site-menu{
   display: flex;
 }
 .menu-tile{
   color: #a4a415;
-  text-decoration: none;
   font-size: 25px;
   margin: 0 10px;
 }
 
+.manage-tile{
+  background-color: #a4a415;
+  width: 200px;
+  height: 100px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6d4aa9;
+  font-size: 1.3em;
+}
+.manage-tile:hover{
+  background-color: #c2c219;
+}
+.manage-users-table, .manage-users-table td, .manage-users-table th
+{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 20px;
+  background-color: #bc9df6;
+}

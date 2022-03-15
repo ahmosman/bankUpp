@@ -24,7 +24,7 @@ class UserAddress
     #[ORM\Column(type: 'string', length: 100)]
     private $city;
 
-    #[ORM\OneToMany(mappedBy: 'Address', targetEntity: User::class)]
+    #[ORM\OneToMany(mappedBy: 'address', targetEntity: User::class)]
     private $users;
 
     public function __construct()

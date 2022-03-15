@@ -13,6 +13,7 @@ class MainController extends AbstractController
      */
     public function index(): Response
     {
+        dump($this->getUser());
         return $this->render('index.html.twig');
     }
 }

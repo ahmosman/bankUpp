@@ -1,5 +1,5 @@
 <header class="site-header">
-    <div class="site-logo">BankUpp</div>
+    <a href="{{ path('app_main') }}" class="site-logo">BankUpp</a>
     <div class="site-menu">
         <a href="#" class="menu-tile">Nasz bank</a>
         {% if is_granted('ROLE_BANK_USER') %}
@@ -9,6 +9,11 @@
         {% if is_granted('ROLE_ADMIN') %}
         <a href="#" class="menu-tile">Zarządaj</a>
         {% endif %}
+
+        {% if is_granted('ROLE_BANKER') %}
+            <a href="{{ path('app_banker') }}" class="menu-tile">Panel bankiera</a>
+        {% endif %}
+
 
         {% if is_granted('ROLE_USER') %}
         <a href="{{ path('app_logout') }}" class="menu-tile">Wyloguj</a>
