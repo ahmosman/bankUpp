@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BankUpp - Wykonaj przelew{% endblock %}
+
+{% block body %}
+    <h1>Historia przelewów</h1>
+
+
+    <section class="user-history-container">
+        <table class="manage-users-table">
+            <tr>
+                <th>Źródłowe konto</th>
+                <th>Rodzaj</th>
+                <th>Kwota</th>
+                <th>Email</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Numer konta</th>
+                <th>Data</th>
+            </tr>
+            {% for history in histories %}
+                <tr>
+                    {% if history.fromAccount.user.email == userEmail %}
+                        <td>{{ history.fromAccount.accountCode }}</td>
+                        <td>Wydatek</td>
+                        <td>{{ history.amount }}</td>
+                        <td>{{ history.toAccount.user.email }}</td>
+                        <td>{{ history.toAccount.user.firstName }}</td>
+                        <td>{{ history.toAccount.user.LastName }}</td>
+                        <td>{{ history.toAccount.accountCode }}</td>
+                        <td>{{ history.date|date('d-m-Y') }}</td>
+                    {% else %}
+                        <td>{{ history.toAccount.accountCode }}</td>
+                        <td>Przychód</td>
+                        <td>{{ history.amount }}</td>
+                        <td>{{ history.fromAccount.user.email }}</td>
+                        <td>{{ history.fromAccount.user.firstName }}</td>
+                        <td>{{ history.fromAccount.user.LastName }}</td>
+                        <td>{{ history.fromAccount.accountCode }}</td>
+                        <td>{{ history.date|date('d-m-Y') }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+{% endblock %}
