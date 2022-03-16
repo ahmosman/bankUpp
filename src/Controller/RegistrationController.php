@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
 use App\Entity\User;
 use App\Entity\UserAddress;
 use App\Form\RegistrationFormType;
@@ -9,6 +10,7 @@ use App\Repository\UserAddressRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\UserAuthenticator;
+use App\Service\AccountService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +25,12 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private AccountService $accountService;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, AccountService $accountService)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->accountService = $accountService;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -65,7 +69,9 @@ class RegistrationController extends AbstractController
             }else{
                 $user->setAddress($existingAddress);
             }
-//            dump($existingAddress);
+
+            $this->accountService->createAccount($user, 1);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -116,7 +122,6 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Pomyślnie zarejestrowano się w serwisie BankUpp. Możesz się zalogować.');
 
         return $this->redirectToRoute('app_login');

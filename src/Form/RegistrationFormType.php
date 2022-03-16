@@ -50,9 +50,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 11,
-                        'minMessage' => 'Pesel powinien składać się z {{ limit }} cyfr.',
                         'max' => 11,
-                        'maxMessage' => 'Pesel powinien składać się z {{ limit }} cyfr.'
+                        'exactMessage' => 'Pesel powinien składać się z {{ limit }} cyfr.'
                     ]),
                 ],
             ])
@@ -64,13 +63,12 @@ class RegistrationFormType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Proszę podać numer PESEL.',
+                        'message' => 'Proszę podać numer telefonu.',
                     ]),
                     new Length([
                         'min' => 9,
-                        'minMessage' => 'Numer telefonu powinien składać się z {{ limit }} cyfr.',
                         'max' => 9,
-                        'maxMessage' => 'Numer telefonu powinien składać się z {{ limit }} cyfr.'
+                        'exactMessage' => 'Numer telefonu powinien składać się z {{ limit }} cyfr.'
                     ]),
                 ],
             ])
@@ -96,9 +94,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 5,
-                        'minMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.',
-//                    'max' => 5,
-//                    'maxMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.'
+                        'max' => 5,
+                        'exactMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.',
                     ]),
 
                 ]])

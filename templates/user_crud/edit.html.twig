@@ -3,7 +3,7 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edytuj użytkownika</h1>
+    <h1>Edytuj {{typeInfo~'a'}}</h1>
 
     {{ include('user_crud/_form.html.twig', {'button_label': 'Zaktualizuj'}) }}
 

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BankUserController!{% endblock %}
+
+{% block body %}
+
+    <h1>Twoje konto</h1>
+    <section class="user-dashboard">
+        <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+        <div class="user-email">{{ user.email }}</div>
+        <div class="user-address">
+            <div>{{ user.address.address }}</div>
+            <div>{{ user.address.postalCode }}</div>
+
+        </div>
+        <div class="user-total-balance">Masz w sumie {{ totalBalance }}zł</div>
+        <div class="accounts-container">
+            {% for account in  user.accounts%}
+            <div class="card-account">
+                <div class="card-account-type">{{ account.accountType.name }}</div>
+                <div class="card-account-code">{{ account.accountCode }}</div>
+                <div class="card-account-balance">Stan konta: {{ account.balance }}zł</div>
+                <a href="{{ path('app_account_transfer',{id : account.id}) }}">Wykonaj przelew</a>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{{ path('app_account_create',{accountType: 1}) }}">Dodaj konto Standardowe</a><br>
+        <a href="{{ path('app_account_create',{accountType: 2}) }}">Dodaj konto Extra</a><br>
+        <a href="{{ path('app_account_create',{accountType: 3}) }}">Dodaj konto Platinium</a><br>
+    </section>
+
+{% endblock %}

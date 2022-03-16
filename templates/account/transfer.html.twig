@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BankUpp - Wykonaj przelew{% endblock %}
+
+{% block body %}
+    <h1>Wykonaj przelew</h1>
+    <br><br>
+    <h2>{{ fromAccount.accountType.name }}</h2>
+    <h2>{{ fromAccount.accountCode }}</h2>
+
+
+    <section class="user-transfer-container">
+        {{ form_start(form) }}
+        {{ form_row(form.toAccountNumber) }}
+        {{ form_row(form.amount) }}
+        <button type="submit">Wyślij przelew</button>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

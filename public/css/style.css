@@ -44,6 +44,10 @@ section{
   margin: 0 10px;
 }
 
+.manage-tiles-container{
+  display: flex;
+  justify-content: space-around;
+}
 .manage-tile{
   background-color: #a4a415;
   width: 200px;
@@ -65,4 +69,29 @@ section{
   border-collapse: collapse;
   padding: 20px;
   background-color: #bc9df6;
+}
+.capitalize-first-letter::first-letter{
+  text-transform: uppercase;
+}
+.user-dashboard *{
+  font-size: 25px;
+}
+
+.user-dashboard .user-name{
+  font-size: 35px;
+}
+.user-address{
+  margin-top: 20px;
+}
+.user-total-balance{
+  margin-top: 40px;
+}
+.accounts-container{
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-account{
+  margin: 20px;
+  width: 400px;
 }

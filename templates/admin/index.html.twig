@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BankUpp{% endblock %}
+
+{% block body %}
+
+    <div class="manage-tiles-container">
+        <a href="{{ path('app_admin_management') }}" class="manage-tile">Zarządzaj bankierami</a>
+        <a href="{{ path('app_banker_management') }}" class="manage-tile">Zarządzaj użytkownikami</a>
+
+    </div>
+{% endblock %}

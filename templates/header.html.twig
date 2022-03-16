@@ -3,11 +3,11 @@
     <div class="site-menu">
         <a href="#" class="menu-tile">Nasz bank</a>
         {% if is_granted('ROLE_BANK_USER') %}
-        <a href="#" class="menu-tile">Moje konto</a>
+        <a href="{{ path('app_bank_user') }}" class="menu-tile">Moje konto</a>
         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="#" class="menu-tile">Zarządaj</a>
+        <a href="{{ path('app_admin') }}" class="menu-tile">Zarządaj</a>
         {% endif %}
 
         {% if is_granted('ROLE_BANKER') %}
