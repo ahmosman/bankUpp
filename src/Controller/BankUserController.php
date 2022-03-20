@@ -21,9 +21,6 @@ class BankUserController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $accounts = $user->getAccounts();
-        $postalCode = $user->getAddress()->getPostalCode();
-        $postalCode = substr_replace($postalCode, '-', 2, 0);
-        $user->getAddress()->setPostalCode($postalCode);
         $totalBalance = floatval(0);
         $phoneAccount = $user->getPhoneAccount();
         /** @var Account $account */
@@ -45,11 +42,11 @@ class BankUserController extends AbstractController
         /** @var Account $account */
         foreach ($accounts as $account) {
             foreach ($account->getTransferHistoriesFrom() as $fromHistory)
-                $histories[] = $fromHistory;
+                $histories[$fromHistory->getId()] = $fromHistory;
             foreach ($account->getTransferHistoriesTo() as $toHistory)
-                $histories[] = $toHistory;
+                $histories[$toHistory->getId()] = $toHistory;
         }
-        dump($histories[0]);
+        //usunięcie duplikatów przelewów na własne konta
         usort($histories, function($a, $b)
         {
             return $a->getDate() < $b->getDate();

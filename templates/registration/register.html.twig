@@ -18,6 +18,11 @@
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.phoneNumber) }}
                 {{ form_row(registrationForm.plainPassword) }}
+                <div class="register-password-info">
+                    Hasło powinno zawierać co najmniej
+                    8 znaków oraz musi składać się z co najmniej jednej małej litery,
+                    jednej wielkiej litery, cyfry oraz znaku spejalnego [@#$%^&+=!].
+                </div>
             </div>
             <div class="form-container-column">
                 {{ form_row(registrationForm.pesel) }}

@@ -128,4 +128,12 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
+
+    #[Route('/register/confirmMessage', name: 'app_confirm_message')]
+    public function confirmMessage():  Response
+    {
+        return $this->render('registration/register.html.twig', [
+            'confirmMessage' => true
+        ]);
+    }
 }

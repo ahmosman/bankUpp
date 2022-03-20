@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -81,21 +82,16 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('postalCode', NumberType::class, [
+            ->add('postalCode', TextType::class, [
                 'label' => 'Kod pocztowy ',
                 'mapped' => false,
-                'attr' => [
-                    'minLength' => 5,
-                    'maxLength' => 5,
-                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Proszę podać kod pocztowy.',
                     ]),
-                    new Length([
-                        'min' => 5,
-                        'max' => 5,
-                        'exactMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.',
+                    new Regex([
+                        'pattern' => '/^\d{2}[-]{1}\d{3}$/',
+                        'message' => 'Niepoprawny format kodu pocztowego.'
                     ]),
 
                 ]])
@@ -136,11 +132,9 @@ class RegistrationFormType extends AbstractType
                         new NotBlank([
                             'message' => 'Proszę podać hasło.',
                         ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Twoje hasło powinno składać się z przynajmniej {{ limit }} znaków.',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
+                        new Regex([
+                            'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/',
+                            'message' => 'Niepoprawny format hasła.'
                         ]),
                     ]
                 ],

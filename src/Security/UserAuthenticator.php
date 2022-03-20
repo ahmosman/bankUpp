@@ -16,6 +16,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Twig\Environment;
 
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -25,11 +26,13 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
     private UserRepository $userRepository;
+    private Environment $twig;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, UserRepository $userRepository)
+    public function __construct(UrlGeneratorInterface $urlGenerator, UserRepository $userRepository, Environment $twig)
     {
         $this->urlGenerator = $urlGenerator;
         $this->userRepository = $userRepository;
+        $this->twig = $twig;
     }
 
     public function supports(Request $request): bool

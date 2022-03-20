@@ -1,13 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BankUpp - zarządzanie {{ typeInfo~'ami'}}{% endblock %}
+{% block title %}BankUpp - zarządzanie {{ typeInfo~'ami' }}{% endblock %}
 
 {% block body %}
-    <section>
-        <h1>Zarządzaj {{ typeInfo~'ami'}}</h1>
+    <section class="manage-users-header">
+        <div>
+            <h1>Zarządzaj {{ typeInfo~'ami' }}</h1>
+        </div>
+        <div>
+            <a href="
+            {% if typeInfo == 'użytkownik' %}
+            {{ path('app_banker_add_user') }}
+            {% elseif typeInfo == 'bankier' %}
+            {{ path('app_admin_add_banker') }}
+            {% endif %}
+
+" class="btn">Dodaj {{ typeInfo~'a' }}</a>
+        </div>
     </section>
 
-    <div class="manage-users-container">
+    <section class="manage-users-container">
         <table class="manage-users-table">
             <tr>
                 <th>ID</th>
@@ -28,17 +40,20 @@
                     <td>{{ user.address.postalCode }}</td>
                     <td>{{ user.address.city }}</td>
                     <td>
-                        <a href="{{ path('app_user_crud_edit', {id: user.id, typeInfo: typeInfo}) }}">Zmień dane</a>
-                        <a href="{{ path('app_user_crud_show', {id: user.id, typeInfo: typeInfo}) }}">Wyświetl</a>
+                        <div>
+                            <a href="{{ path('app_user_crud_edit', {id: user.id, typeInfo: typeInfo}) }}">Zmień dane</a>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_user_crud_show', {id: user.id, typeInfo: typeInfo}) }}">Wyświetl</a>
+                        </div>
                         {{ include('user_crud/_delete_form.html.twig') }}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="10">Nie znaleziono {{ typeInfo~'ów'}}.</td>
+                    <td colspan="10">Nie znaleziono {{ typeInfo~'ów' }}.</td>
                 </tr>
             {% endfor %}
         </table>
-        <a href="{{ path('app_admin_add_banker') }}">Dodaj {{ typeInfo~'a'}}</a>
-    </div>
+    </section>
 {% endblock %}

@@ -6,6 +6,6 @@
     <h1>Dodaj {{ typeInfo ~ 'a' }}</h1>
 
     {{ include('user_crud/_form.html.twig') }}
-    <p class="capitalize-first-letter">{{ typeInfo }} zostanie automatycznie zweryfikowany</p>
+    <p class="capitalize-first-letter">{{ typeInfo }} zostanie automatycznie zweryfikowany.</p>
     <a href="{{ path('app_banker_management') }}">Powrót do listy</a>
 {% endblock %}

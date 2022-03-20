@@ -7,6 +7,7 @@
 
 
     <section class="user-history-container">
+        {% if histories is not empty %}
         <table class="manage-users-table">
             <tr>
                 <th>Źródłowe konto</th>
@@ -72,5 +73,8 @@
                 </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <p>Nie ma tu jeszcze żadnych przelewów</p>
+        {% endif %}
     </section>
 {% endblock %}

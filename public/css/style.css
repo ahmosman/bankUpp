@@ -81,11 +81,32 @@ section {
     background-color: #c2c219;
 }
 
+.manage-users-header {
+    display: flex;
+    position: relative;
+}
+
+.manage-users-header > * {
+}
+
+.manage-users-header > div:nth-of-type(1) {
+    width: 40%;
+}
+
+.manage-users-header > div:nth-of-type(2) {
+    width: 60%;
+    text-align: right;
+}
+
+
 .manage-users-table, .manage-users-table td, .manage-users-table th {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 20px;
     background-color: #bc9df6;
+}
+.manage-users-table{
+    width: 100%;
 }
 
 .capitalize-first-letter::first-letter {
@@ -259,6 +280,10 @@ input[type="checkbox"] {
     font-size: 100px;
 }
 
+.home-section.narrow {
+    padding: 0 200px;
+}
+
 .home-text-large {
     color: #a4a415;
     font-size: 1.5em;
@@ -269,27 +294,35 @@ input[type="checkbox"] {
     position: relative;
 }
 
-.card-account-phone-transfer i{
+.card-account-phone-transfer i {
     position: absolute;
     right: 10px;
     font-size: 40px;
 }
-.user-section{
+
+.user-section {
     display: flex;
 }
-.phone-account-container, .user-data-container{
+
+.phone-account-container, .user-data-container {
     width: 50%;
 }
-.phone-account-container>div:nth-of-type(1)
-{
+
+.phone-account-container > div:nth-of-type(1) {
     text-align: center;
 }
-.phone-account-container .fa-mobile-screen{
+
+.phone-account-container .fa-mobile-screen {
     color: purple;
     text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.accounts-container .fa-mobile-screen:hover{
+.accounts-container .fa-mobile-screen:hover {
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
     color: #5c0b86;
+}
+
+.register-password-info {
+    text-align: justify;
+    width: 300px;
 }

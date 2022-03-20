@@ -56,10 +56,10 @@ class BankerController extends AbstractController
             return $this->redirectToRoute('app_banker_management', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('new.html.twig', [
+        return $this->renderForm('user_crud/new.html.twig', [
             'user' => $user,
             'form' => $form,
-            'typeInfo' => 'Dodaj użytkownika',
+            'typeInfo' => 'użytkownik',
             'managementRoute' => 'app_banker_management'
         ]);
     }

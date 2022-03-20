@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserAddressType extends AbstractType
 {
@@ -24,21 +25,15 @@ class UserAddressType extends AbstractType
                     ])
                 ]
             ])
-            ->add('postalCode', NumberType::class, [
+            ->add('postalCode', TextType::class, [
                 'label' => 'Kod pocztowy ',
-                'attr' => [
-                    'minLength' => 5,
-                    'maxLength' => 5,
-                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Proszę podać kod pocztowy.',
                     ]),
-                    new Length([
-                        'min' => 5,
-                        'minMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.',
-//                    'max' => 5,
-//                    'maxMessage' => 'Kod pocztowy powinien składać się z {{ limit }} cyfr.'
+                    new Regex([
+                        'pattern' => '/^\d{2}[-]{1}\d{3}$/',
+                        'message' => 'Niepoprawny format kodu pocztowego.'
                     ]),
 
                 ]])

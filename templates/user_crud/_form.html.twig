@@ -1,4 +1,19 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Zapisz') }}</button>
-{{ form_end(form) }}
+<div class="form-container">
+    {{ form_start(form) }}
+    <div class="form-container-column">
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.phoneNumber) }}
+    </div>
+    <div class="form-container-column">
+        {{ form_row(form.pesel) }}
+        {{ form_row(form.address.address) }}
+        {{ form_row(form.address.postalCode) }}
+        {{ form_row(form.address.city) }}
+        <button type="submit" class="btn btn-submit">Zapisz</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{#    <button class="btn">{{ button_label|default('Zapisz') }}</button>#}
+{#{{ form_end(form) }}#}
