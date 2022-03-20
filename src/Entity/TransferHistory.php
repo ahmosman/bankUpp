@@ -22,11 +22,11 @@ class TransferHistory
     private $date;
 
     #[ORM\ManyToOne(targetEntity: Account::class, inversedBy: 'transferHistoriesFrom')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private $fromAccount;
 
     #[ORM\ManyToOne(targetEntity: Account::class, inversedBy: 'transferHistoriesTo')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private $toAccount;
 
     public function getId(): ?int

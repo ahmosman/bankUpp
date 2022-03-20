@@ -51,7 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Account::class, orphanRemoval: true)]
     private $accounts;
 
-    #[ORM\OneToOne(targetEntity: Account::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Account::class, cascade: ['remove'], orphanRemoval: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "CASCADE")]
     private $phoneAccount;
 
     public function __construct()

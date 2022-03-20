@@ -22,7 +22,7 @@ class Account
     private $balance;
 
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'accounts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: AccountType::class, inversedBy: 'accounts')]

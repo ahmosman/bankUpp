@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Account;
 use App\Entity\User;
 use App\Repository\AccountRepository;
+use App\Repository\TransferHistoryRepository;
 use App\Repository\UserRepository;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BankUserController extends AbstractController
 {
+    private TransferHistoryRepository $transferRepository;
+
+    public function __construct(TransferHistoryRepository $transferRepository)
+    {
+        $this->transferRepository = $transferRepository;
+    }
+
     #[IsGranted("ROLE_BANK_USER")]
     #[Route('/profile', name: 'app_bank_user')]
     public function bankUserDashboard(): Response
@@ -34,26 +44,16 @@ class BankUserController extends AbstractController
         ]);
     }
 
-    #[Route('/history', name: 'app_account_history')]
-    public function history()
+    #[Route('/history/{page<\d+>}', name: 'app_account_history')]
+    public function history(int $page = 1): Response
     {
-        $accounts = $this->getUser()->getAccounts();
-        $histories = [];
-        /** @var Account $account */
-        foreach ($accounts as $account) {
-            foreach ($account->getTransferHistoriesFrom() as $fromHistory)
-                $histories[$fromHistory->getId()] = $fromHistory;
-            foreach ($account->getTransferHistoriesTo() as $toHistory)
-                $histories[$toHistory->getId()] = $toHistory;
-        }
-        //usunięcie duplikatów przelewów na własne konta
-        usort($histories, function($a, $b)
-        {
-            return $a->getDate() < $b->getDate();
-        });
+        $queryBuilder = $this->transferRepository->createTransferHistoryQueryBuilder($this->getUser());
+        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
+        $pager->setMaxPerPage(5);
+        $pager->setCurrentPage($page);
+//        dump($pager);die();
         return $this->render('account/history.html.twig', [
-            'account' => $account,
-            'histories' => $histories,
+            'pager' => $pager,
             'userEmail' => $this->getUser()->getUserIdentifier()
         ]);
     }

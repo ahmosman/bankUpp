@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,17 +25,20 @@ class AdminController extends AbstractController
     #[Route('/', name: 'app_admin')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        return $this->render('management/index.html.twig', [
+            'user' => $this->getUser(),
         ]);
     }
 
-    #[Route('/management', name: 'app_admin_management')]
-    public function adminBankersManagement(): Response
+    #[Route('/management/{page<\d+>}', name: 'app_admin_management')]
+    public function adminBankersManagement(int $page = 1): Response
     {
-        $bankers = $this->userRepository->findByRole('BANKER');
-        return $this->render('user_crud/management.html.twig', [
-            'users' => $bankers,
+        $queryBuilder = $this->userRepository->createFindUsersByRoleQueryBuilder('BANKER');
+        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
+        $pager->setMaxPerPage(5);
+        $pager->setCurrentPage($page);
+        return $this->render('user_crud/show.html.twig', [
+            'pager' => $pager,
             'typeInfo' => 'bankier'
         ]);
     }

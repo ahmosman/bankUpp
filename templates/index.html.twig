@@ -15,11 +15,26 @@
                 <div class="site-logo">BankUpp</div>
             </div>
             <div>
+                {% if not is_granted('ROLE_USER') %}
                 <div class="home-text-large">Dołącz do nas</div>
                 <a href="{{ path('app_register') }}" class="btn">Załóż konto</a>
+
+                {% elseif is_granted('ROLE_BANK_USER') %}
+                <div class="home-text-large">Dziękujemy, że z nami jesteś</div>
+                <a href="{{ path('app_bank_user') }}" class="btn">Twoje konto</a>
+
+                {% elseif is_granted('ROLE_BANKER') %}
+                <div class="home-text-large">Dziękujemy, że dla nas pracujesz</div>
+                <a href="{{ path('app_banker') }}" class="btn">Zarządzaj</a>
+
+                {% elseif is_granted('ROLE_ADMIN') %}
+                <div class="home-text-large">Adminie, rządź rozsądnie</div>
+                <a href="{{ path('app_admin') }}" class="btn">Zarządzaj</a>
+                {% endif %}
             </div>
         </section>
+        {% if not is_granted('ROLE_USER') %}
         <p>Masz już konto? Zaloguj się <a href="{{ path('app_login') }}">tutaj</a></p>
-
+        {% endif %}
     </section>
 {% endblock %}

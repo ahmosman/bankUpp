@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BankUpp - zarządzanie{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Panel administratora</h1>
+
+    {% elseif is_granted('ROLE_BANKER') %}
+        <h1>Panel bankiera</h1>
+    {% endif %}
+    <section class="manage-main-section">
+        <section class="manage-user-dashboard">
+            <section class="user-section">
+                <div class="user-data-container">
+                    <div class="user-name">Witaj, {{ user.firstName }} {{ user.lastName }}</div>
+                    <div class="user-email">{{ user.email }}</div>
+                    <div class="user-phone">tel: {{ user.phoneNumber }}</div>
+                    <div class="user-address">
+                        <div>{{ user.address.address }}</div>
+                        <div>{{ user.address.postalCode }}</div>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section class="manage-tiles-container">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_management') }}" class="manage-tile">Zarządzaj bankierami</a>
+            {% endif %}
+            <a href="{{ path('app_banker_management') }}" class="manage-tile">Zarządzaj użytkownikami</a>
+
+        </section>
+
+    </section>
+{% endblock %}

@@ -4,17 +4,17 @@
 
 {% block body %}
     <div class="form-container">
+        {% if error %}
+            <div class="alert alert-danger">Niepoprawne dane logowania.</div>
+        {% endif %}
+        {% if app.user %}
+        <div class="mb-3">
+            Zalogowano jako {{ app.user.username }}, <a href="{{ path('app_logout') }}">Wyloguj</a>
+        </div>
+        {% else %}
         <form method="post">
             <div class="form-container-column">
-                {% if error %}
-                    <div class="alert alert-danger">Niepoprawne dane logowania.</div>
-                {% endif %}
 
-                {% if app.user %}
-                    <div class="mb-3">
-                        Zalogowano jako {{ app.user.username }}, <a href="{{ path('app_logout') }}">Wyloguj</a>
-                    </div>
-                {% else %}
 
                     <h1>Zaloguj się!</h1>
                     <label for="inputEmail">Email</label>
@@ -42,8 +42,11 @@
                     <button class="btn btn-submit" type="submit">
                         Zaloguj
                     </button>
-                {% endif %}
+
             </div>
         </form>
+        <section class="text-center"> <p>Nie masz jeszcze konta? Zarejestruj się <a href="{{ path('app_register') }}">tutaj</a></p></section>
+        {% endif %}
+
     </div>
 {% endblock %}

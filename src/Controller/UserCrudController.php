@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Account;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -19,14 +20,20 @@ class UserCrudController extends AbstractController
     #[Route('/{typeInfo}/{id}', name: 'app_user_crud_show', methods: ['GET'])]
     public function show(User $user, string $typeInfo): Response
     {
+        $accounts = $user->getAccounts();
+        $totalBalance = floatval(0);
+        /** @var Account $account */
+        foreach ($accounts as $account)
+            $totalBalance += $account->getBalance();
         $managementRoute =
             ($typeInfo == 'użytkownik') ? 'app_banker_management' :
                 (($typeInfo == 'bankier') ? 'app_admin_management': 'app_main');
 
-        return $this->render('user_crud/show.html.twig', [
+        return $this->render('user_crud/display_user.html.twig', [
             'user' => $user,
             'managementRoute' => $managementRoute,
-            'typeInfo' => $typeInfo
+            'typeInfo' => $typeInfo,
+            'totalBalance' => $totalBalance
         ]);
     }
 

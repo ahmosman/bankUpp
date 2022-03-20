@@ -1,7 +1,7 @@
 <header class="site-header">
     <a href="{{ path('app_main') }}" class="site-logo">BankUpp</a>
     <div class="site-menu">
-        <a href="#" class="menu-tile">Nasz bank</a>
+{#        <a href="#" class="menu-tile">Nasz bank</a>#}
         {% if is_granted('ROLE_BANK_USER') %}
         <a href="{{ path('app_bank_user') }}" class="menu-tile">Moje konto</a>
         {% endif %}

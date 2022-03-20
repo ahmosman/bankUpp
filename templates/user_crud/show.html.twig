@@ -1,54 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BankUpp - {{ typeInfo }}{% endblock %}
+{% block title %}BankUpp - zarządzanie {{ typeInfo~'ami' }}{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <section class="manage-users-header">
+        <div>
+            <h1>Zarządzaj {{ typeInfo~'ami' }}</h1>
+        </div>
+        <div>
+            <a href="
+            {% if typeInfo is same as 'użytkownik' %}
+            {{ path('app_banker_add_user') }}
+            {% elseif typeInfo is same as 'bankier' %}
+            {{ path('app_admin_add_banker') }}
+            {% endif %}
 
-    <table class="table">
-        <tbody>
+" class="btn">Dodaj {{ typeInfo~'a' }}</a>
+        </div>
+    </section>
+
+    <section class="manage-users-container">
+        <table class="manage-users-table">
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
+                <th>ID</th>
                 <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-{#            <tr>#}
-{#                <th>Hasło</th>#}
-{#                <td>{{ user.password }}</td>#}
-{#            </tr>#}
-            <tr>
                 <th>Imię</th>
-                <td>{{ user.firstName }}</td>
-            </tr>
-            <tr>
                 <th>Nazwisko</th>
-                <td>{{ user.lastName }}</td>
+                <th>Adres</th>
+                <th>Kod pocztowy</th>
+                <th>Miasto</th>
             </tr>
-            <tr>
-                <th>Pesel</th>
-                <td>{{ user.pesel }}</td>
-            </tr>
-            <tr>
-                <th>Numer telefonu</th>
-                <td>{{ user.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>Zweryfikowano</th>
-                <td>{{ user.isVerified ? 'Tak' : 'Nie' }}</td>
-            </tr>
-        </tbody>
-    </table>
+            {% for user in pager %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.address.address }}</td>
+                    <td>{{ user.address.postalCode }}</td>
+                    <td>{{ user.address.city }}</td>
+                    <td>
+                        <div>
+                                <a href="{{ path('app_user_crud_edit', {id: user.id, typeInfo: typeInfo}) }}">Zmień
+                                    dane</a>
+                            {% if typeInfo is same as 'użytkownik' %}
+                                <a href="{{ path('app_user_crud_show', {id: user.id, typeInfo: typeInfo}) }}">Wyświetl</a>
+                            {% endif %}
+                        </div>
+                        {{ include('user_crud/_delete_form.html.twig') }}
 
-    <a href="{{ path(managementRoute) }}">Powrót do listy</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">Nie znaleziono {{ typeInfo~'ów' }}.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="pagination-container">
+            {{ pagerfanta(pager) }}
+        </div>
 
-    <a href="{{ path('app_user_crud_edit', {'id': user.id, typeInfo: typeInfo}) }}">Edytuj</a>
-
-    {{ include('user_crud/_delete_form.html.twig') }}
+    </section>
 {% endblock %}

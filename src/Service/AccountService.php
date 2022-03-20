@@ -17,9 +17,9 @@ class AccountService
     private TransferHistoryRepository $historyRepository;
     private UserRepository $userRepository;
 
-    public function __construct(AccountRepository $accountRepository,
-                                UserRepository $userRepository,
-                                AccountTypeRepository $accountTypeRepository,
+    public function __construct(AccountRepository         $accountRepository,
+                                UserRepository            $userRepository,
+                                AccountTypeRepository     $accountTypeRepository,
                                 TransferHistoryRepository $historyRepository)
     {
         $this->accountRepository = $accountRepository;
@@ -31,7 +31,7 @@ class AccountService
     public function createAccount(User $user, int $accountTypeId)
     {
         $accountType = $this->accountTypeRepository->find($accountTypeId);
-        if(!$accountType)
+        if (!$accountType)
             return;
         $account = new Account();
         $account->setUser($user);
@@ -39,13 +39,13 @@ class AccountService
         $account->setAccountType($accountType);
         //generate random account code
         $accountCode = "";
-        for ($i = 0; $i < 26; $i++){
-            $accountCode .= mt_rand(0,9);
+        for ($i = 0; $i < 26; $i++) {
+            $accountCode .= mt_rand(0, 9);
         }
         while ($this->accountRepository->findOneBy(['accountCode' => $accountCode])) {
             $accountCode = "";
-            for ($i = 0; $i < 26; $i++){
-                $accountCode .= mt_rand(0,9);
+            for ($i = 0; $i < 26; $i++) {
+                $accountCode .= mt_rand(0, 9);
             }
         }
         $account->setAccountCode($accountCode);
@@ -56,15 +56,19 @@ class AccountService
     public function makeTransfer(Account $fromAccount, string $toAccountNumber, int $amount, bool $isPhone)
     {
         /** @var Account $toAccount */
-        if($isPhone)
-            $toAccount = $this->userRepository->findOneBy(['phoneNumber'=>$toAccountNumber])->getPhoneAccount();
-        else
-            $toAccount = $this->accountRepository->findOneBy(['accountCode'=>$toAccountNumber]);
+        if ($isPhone) {
+            $toUser = $this->userRepository->findOneBy(['phoneNumber' => $toAccountNumber]);
+            if ($toUser)
+                $toAccount = $toUser->getPhoneAccount();
+            else
+                return false;
+        } else
+            $toAccount = $this->accountRepository->findOneBy(['accountCode' => $toAccountNumber]);
 
-        if(!$toAccount or $toAccount === $fromAccount)
+        if (!$toAccount or $toAccount === $fromAccount)
             return false;
-        $toAccount->setBalance($toAccount->getBalance()+$amount);
-        $fromAccount->setBalance($fromAccount->getBalance()-$amount);
+        $toAccount->setBalance($toAccount->getBalance() + $amount);
+        $fromAccount->setBalance($fromAccount->getBalance() - $amount);
         $history = new TransferHistory();
         $history->setAmount($amount);
         $history->setFromAccount($fromAccount);

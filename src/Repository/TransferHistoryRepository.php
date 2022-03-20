@@ -2,10 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Account;
 use App\Entity\TransferHistory;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,6 +47,19 @@ class TransferHistoryRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function createTransferHistoryQueryBuilder(User $user): QueryBuilder
+    {
+        $id = $user->getId();
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.fromAccount', 'fa')
+            ->innerJoin('t.toAccount', 'ta')
+            ->where('fa.user = :id')
+            ->orWhere('ta.user = :id')
+            ->setParameter('id', $id)
+            ->orderBy('t.date', 'DESC')
+            ;
     }
 
     // /**

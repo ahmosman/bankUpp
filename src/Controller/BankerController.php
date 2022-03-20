@@ -6,6 +6,9 @@ use App\Entity\Account;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\AccountService;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,24 +20,31 @@ use Symfony\Component\Routing\Annotation\Route;
 class BankerController extends AbstractController
 {
     private UserRepository $userRepository;
+    private AccountService $accountService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, AccountService $accountService)
     {
         $this->userRepository = $userRepository;
+        $this->accountService = $accountService;
     }
 
     #[Route('/', name: 'app_banker')]
     public function index(): Response
     {
-        return $this->render('banker/index.html.twig');
+        return $this->render('management/index.html.twig', [
+            'user' => $this->getUser(),
+        ]);
     }
 
-    #[Route('/management', name: 'app_banker_management')]
-    public function userManagement(): Response
+    #[Route('/management/{page<\d+>}', name: 'app_banker_management')]
+    public function userManagement(int $page = 1): Response
     {
-        $bankUsers = $this->userRepository->findByRole('BANK_USER');
-        return $this->render('user_crud/management.html.twig', [
-            'users' => $bankUsers,
+        $queryBuilder = $this->userRepository->createFindUsersByRoleQueryBuilder('BANK_USER');
+        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
+        $pager->setMaxPerPage(5);
+        $pager->setCurrentPage($page);
+        return $this->render('user_crud/show.html.twig', [
+            'pager' => $pager,
             'typeInfo' => 'użytkownik'
         ]);
     }
@@ -51,7 +61,10 @@ class BankerController extends AbstractController
             //            TODO: Tymczasowe hasło
             $hashedPassword = $passwordHasher->hashPassword($user,'qwerty');
             $user->setPassword($hashedPassword);
-            $user->setIsVerified(true);            $userRepository->add($user);
+            $user->setIsVerified(true);
+            $account = $this->accountService->createAccount($user,1);
+            $user->setPhoneAccount($account);
+            $userRepository->add($user);
             $this->addFlash('success','Pomyślnie dodano użytkownika');
             return $this->redirectToRoute('app_banker_management', [], Response::HTTP_SEE_OTHER);
         }

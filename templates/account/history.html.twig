@@ -7,7 +7,7 @@
 
 
     <section class="user-history-container">
-        {% if histories is not empty %}
+        {% if pager is not empty %}
         <table class="manage-users-table">
             <tr>
                 <th>Źródłowe konto</th>
@@ -16,7 +16,7 @@
                 <th>Dane</th>
                 <th>Data</th>
             </tr>
-            {% for history in histories %}
+            {% for history in pager %}
                 <tr>
                     {% if history.fromAccount.user.email == userEmail %}
                         <td>
@@ -73,6 +73,9 @@
                 </tr>
             {% endfor %}
         </table>
+            <div class="pagination-container">
+                {{ pagerfanta(pager) }}
+            </div>
         {% else %}
         <p>Nie ma tu jeszcze żadnych przelewów</p>
         {% endif %}
