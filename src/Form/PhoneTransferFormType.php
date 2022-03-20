@@ -10,26 +10,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class TransferFormType extends AbstractType
+class PhoneTransferFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('toAccount', TextType::class, [
 
-                'label' => 'Numer konta docelowego',
+                'label' => 'Numer telefonu odbiorcy',
                 'attr' => [
-                    'minLength' => 26,
-                    'maxLength' => 26
+                    'minLength' => 9,
+                    'maxLength' => 9
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Proszę podać numer konta docelowego.',
+                        'message' => 'Proszę podać numer telefonu.',
                     ]),
                     new Length([
-                        'min' => 26,
-                        'max' => 26,
-                        'exactMessage' => 'Numer konta docelowego składać składać się z {{ limit }} cyfr.'
+                        'min' => 9,
+                        'max' => 9,
+                        'exactMessage' => 'Numer telefonu powinien składać się z {{ limit }} cyfr.'
                     ]),
                 ],
             ])

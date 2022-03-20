@@ -1,10 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}BankUpp{% endblock %}
 
 {% block body %}
-<div class="home-page-container">
-    <h1>Witaj w naszym banku!</h1>
-    <div>Zarejestruj się w mniej niż minutę i wykonuj natychmiastowe przelewy do innych w nieograniczonej ilości.</div>
-</div>
+    <section class="home-container">
+        <section class="home-section column">
+            <h1>Bez względu na to, co się zmieni, jedno pozostanie: <span> masz w nas sojusznika.</span></h1>
+            <p>Zarejestruj się w mniej niż minutę i wykonuj natychmiastowe przelewy do innych w nieograniczonej
+                ilości.
+            </p>
+        </section>
+        <section class="home-section">
+            <div>
+                <div class="site-logo">BankUpp</div>
+            </div>
+            <div>
+                <div class="home-text-large">Dołącz do nas</div>
+                <a href="{{ path('app_register') }}" class="btn">Załóż konto</a>
+            </div>
+        </section>
+        <p>Masz już konto? Zaloguj się <a href="{{ path('app_login') }}">tutaj</a></p>
+
+    </section>
 {% endblock %}

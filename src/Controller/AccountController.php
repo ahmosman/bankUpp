@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Account;
 use App\Entity\User;
+use App\Form\PhoneTransferFormType;
 use App\Form\TransferFormType;
 use App\Repository\AccountRepository;
 use App\Service\AccountService;
@@ -42,24 +43,25 @@ class AccountController extends AbstractController
     {
         if ($fromAccount->getUser()->getId() !== $this->getUser()->getId())
             return $this->redirectToRoute('app_main');
-        $form = $this->createForm(TransferFormType::class);
+        $isPhone = ($request->query->get('phone') == true);
+        $form = $isPhone ? $this->createForm(PhoneTransferFormType::class) : $this->createForm(TransferFormType::class);
         $form->handleRequest($request);
-        dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
-            $toAccountNumber = $form->get('toAccountNumber')->getData();
+            $toAccountNumber = $form->get('toAccount')->getData();
             $amount = $form->get('amount')->getData();
 
-            if($this->accountService->makeTransfer($fromAccount, $toAccountNumber, $amount)) {
+
+            if ($this->accountService->makeTransfer($fromAccount, $toAccountNumber, $amount, $isPhone)) {
                 $this->addFlash('success', 'Przelew został wykonany');
                 return $this->redirectToRoute('app_bank_user');
-            }else{
-                $this->addFlash('success', 'Nieprawidłowy numer konta');
+            } else {
+                $this->addFlash('success', 'Nieprawidłowy numer '.($isPhone? 'telefonu': 'konta'));
             }
-
         }
-        return $this->render('account/transfer.html.twig',[
+        return $this->render('account/transfer.html.twig', [
             'form' => $form->createView(),
-            'fromAccount' => $fromAccount
+            'fromAccount' => $fromAccount,
+            'isPhone' => $isPhone
         ]);
     }
 

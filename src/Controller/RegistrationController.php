@@ -69,8 +69,10 @@ class RegistrationController extends AbstractController
             }else{
                 $user->setAddress($existingAddress);
             }
-
-            $this->accountService->createAccount($user, 1);
+            //dodanie nowego konta do użytkownika
+            $account = $this->accountService->createAccount($user, 1);
+            // przypisanie konta jako cel przelewów na telefon
+            $user->setPhoneAccount($account);
 
             $entityManager->persist($user);
             $entityManager->flush();

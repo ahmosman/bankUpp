@@ -12,31 +12,61 @@
                 <th>Źródłowe konto</th>
                 <th>Rodzaj</th>
                 <th>Kwota</th>
-                <th>Email</th>
-                <th>Imię</th>
-                <th>Nazwisko</th>
-                <th>Numer konta</th>
+                <th>Dane</th>
                 <th>Data</th>
             </tr>
             {% for history in histories %}
                 <tr>
                     {% if history.fromAccount.user.email == userEmail %}
-                        <td>{{ history.fromAccount.accountCode }}</td>
+                        <td>
+                            <div>
+                                {{ history.fromAccount.accountType.name }}
+                            </div>
+                            <div>
+                                {{ history.fromAccount.accountCode }}
+                            </div>
+                        </td>
                         <td>Wydatek</td>
-                        <td>{{ history.amount }}</td>
-                        <td>{{ history.toAccount.user.email }}</td>
-                        <td>{{ history.toAccount.user.firstName }}</td>
-                        <td>{{ history.toAccount.user.LastName }}</td>
-                        <td>{{ history.toAccount.accountCode }}</td>
-                        <td>{{ history.date|date('d-m-Y') }}</td>
+                        <td> -{{ history.amount }} zł</td>
+                        <td>
+                            <div>
+                                {{ history.toAccount.user.firstName }}
+                                {{ history.toAccount.user.LastName }}
+                            </div>
+                            <div>
+                                {{ history.toAccount.user.email }}
+                            </div>
+                            <div>
+                                {{ history.toAccount.accountCode }}
+                            </div>
+                        </td>
+                        <td>
+                            {{ history.date|date('d-m-Y') }}
+                        </td>
                     {% else %}
-                        <td>{{ history.toAccount.accountCode }}</td>
+                        <td>
+                            <div>
+                                {{ history.toAccount.accountType.name }}
+                            </div>
+                            <div>
+                                {{ history.toAccount.accountCode }}
+                            </div>
+
+                        </td>
                         <td>Przychód</td>
-                        <td>{{ history.amount }}</td>
-                        <td>{{ history.fromAccount.user.email }}</td>
-                        <td>{{ history.fromAccount.user.firstName }}</td>
-                        <td>{{ history.fromAccount.user.LastName }}</td>
-                        <td>{{ history.fromAccount.accountCode }}</td>
+                        <td>+{{ history.amount }} zł</td>
+                        <td>
+                            <div>
+                                {{ history.fromAccount.user.firstName }}
+                                {{ history.fromAccount.user.LastName }}
+                            </div>
+                            <div>
+                                {{ history.fromAccount.user.email }}
+                            </div>
+                            <div>
+                                {{ history.fromAccount.accountCode }}
+                            </div>
+                        </td>
                         <td>{{ history.date|date('d-m-Y') }}</td>
                     {% endif %}
                 </tr>

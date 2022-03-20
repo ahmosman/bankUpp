@@ -1,30 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BankUserController!{% endblock %}
+{% block title %}BankUpp - Twoje konto{% endblock %}
 
 {% block body %}
 
     <h1>Twoje konto</h1>
     <section class="user-dashboard">
-        <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
-        <div class="user-email">{{ user.email }}</div>
-        <div class="user-address">
-            <div>{{ user.address.address }}</div>
-            <div>{{ user.address.postalCode }}</div>
+        <section class="user-section">
+            <div class="user-data-container">
+                <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+                <div class="user-email">{{ user.email }}</div>
+                <div class="user-phone">tel: {{ user.phoneNumber }}</div>
+                <div class="user-address">
+                    <div>{{ user.address.address }}</div>
+                    <div>{{ user.address.postalCode }}</div>
 
-        </div>
-        <div class="user-total-balance">Masz w sumie {{ totalBalance }}zł</div>
-        <a href="{{ path('app_account_history') }}">Historia przelewów</a>
-        <div class="accounts-container">
-            {% for account in  user.accounts%}
-            <div class="card-account">
-                <div class="card-account-type">{{ account.accountType.name }}</div>
-                <div class="card-account-code">{{ account.accountCode }}</div>
-                <div class="card-account-balance">Stan konta: {{ account.balance }}zł</div>
-                <a href="{{ path('app_account_transfer',{id : account.id}) }}">Wykonaj przelew</a>
+                </div>
+                <div class="user-total-balance">Masz w sumie {{ totalBalance }}zł</div>
+                <a href="{{ path('app_account_history') }}">Historia przelewów</a>
             </div>
-            {% endfor %}
-        </div>
+            <div class="phone-account-container">
+                {% if phoneAccountId %}
+                    <div>Przelewy na telefon</div>
+                    {% for account in  user.accounts %}
+                        {% if account.id == phoneAccountId %}
+                            {% include 'bank_user/card_account.html.twig' with {'setPhoneAccountLink': false} %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </section>
+        <section>
+            <div class="accounts-container">
+                {% for account in  user.accounts %}
+                    {% if account.id != phoneAccountId %}
+                        {% include 'bank_user/card_account.html.twig'  with {'setPhoneAccountLink': true}%}
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
         <a href="{{ path('app_account_create',{accountType: 1}) }}">Dodaj konto Standardowe</a><br>
         <a href="{{ path('app_account_create',{accountType: 2}) }}">Dodaj konto Extra</a><br>
         <a href="{{ path('app_account_create',{accountType: 3}) }}">Dodaj konto Platinium</a><br>

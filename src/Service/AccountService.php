@@ -8,20 +8,24 @@ use App\Entity\User;
 use App\Repository\AccountRepository;
 use App\Repository\AccountTypeRepository;
 use App\Repository\TransferHistoryRepository;
+use App\Repository\UserRepository;
 
 class AccountService
 {
     private AccountRepository $accountRepository;
     private AccountTypeRepository $accountTypeRepository;
     private TransferHistoryRepository $historyRepository;
+    private UserRepository $userRepository;
 
     public function __construct(AccountRepository $accountRepository,
+                                UserRepository $userRepository,
                                 AccountTypeRepository $accountTypeRepository,
                                 TransferHistoryRepository $historyRepository)
     {
         $this->accountRepository = $accountRepository;
         $this->accountTypeRepository = $accountTypeRepository;
         $this->historyRepository = $historyRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function createAccount(User $user, int $accountTypeId)
@@ -46,12 +50,17 @@ class AccountService
         }
         $account->setAccountCode($accountCode);
         $this->accountRepository->add($account);
+        return $account;
     }
 
-    public function makeTransfer(Account $fromAccount, string $toAccountCode, int $amount)
+    public function makeTransfer(Account $fromAccount, string $toAccountNumber, int $amount, bool $isPhone)
     {
-        dump($toAccountCode);
-        $toAccount = $this->accountRepository->findOneBy(['accountCode'=>$toAccountCode]);
+        /** @var Account $toAccount */
+        if($isPhone)
+            $toAccount = $this->userRepository->findOneBy(['phoneNumber'=>$toAccountNumber])->getPhoneAccount();
+        else
+            $toAccount = $this->accountRepository->findOneBy(['accountCode'=>$toAccountNumber]);
+
         if(!$toAccount or $toAccount === $fromAccount)
             return false;
         $toAccount->setBalance($toAccount->getBalance()+$amount);

@@ -1,97 +1,295 @@
-*{
-  margin: 0 auto;
-  font-size: 18px;
-  font-family: 'Maven Pro', sans-serif;
+* {
+    margin: 0 auto;
+    font-size: 18px;
+    font-family: 'Maven Pro', sans-serif;
 }
 
 body {
-  background: #6d4aa9;
-  display: flex;
-  flex-direction: column;
-}
-main{
-  margin: auto 170px;
-}
-a{
-  text-decoration: none;
-}
-h1{
-  color: #a4a415;
-  font-size: 2em;
-}
-section{
-  margin: 30px 0;
-}
-.site-header{
-  display: flex;
-  align-items: center;
-  height: 100px;
-  width: 100%;
-  color: #a4a415;
-}
-.site-logo{
-  font-family: 'Faster One', sans-serif;
-  font-size: 60px;
-  margin-right: auto;
-  color: #a4a415;
-}
-.site-menu{
-  display: flex;
-}
-.menu-tile{
-  color: #a4a415;
-  font-size: 25px;
-  margin: 0 10px;
+    background: #6d4aa9;
+    display: flex;
+    flex-direction: column;
 }
 
-.manage-tiles-container{
-  display: flex;
-  justify-content: space-around;
+main {
+    margin: auto 170px;
+
 }
-.manage-tile{
-  background-color: #a4a415;
-  width: 200px;
-  height: 100px;
-  border-radius: 20px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #6d4aa9;
-  font-size: 1.3em;
+
+a {
+    text-decoration: none;
+    color: rgb(65, 3, 117);
 }
-.manage-tile:hover{
-  background-color: #c2c219;
+
+a:visited {
+
 }
-.manage-users-table, .manage-users-table td, .manage-users-table th
+
+h1 {
+    color: #a4a415;
+    font-size: 2em;
+}
+
+section {
+    margin: 30px 0;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    color: #a4a415;
+    margin-bottom: 20px;
+}
+
+.site-logo {
+    font-family: 'Faster One', sans-serif;
+    font-size: 60px;
+    margin-right: auto;
+    color: #a4a415;
+}
+
+.site-menu {
+    display: flex;
+}
+
+.menu-tile {
+    color: #a4a415;
+    font-size: 25px;
+    margin: 0 10px;
+}
+
+.manage-tiles-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.manage-tile {
+    background-color: #a4a415;
+    width: 200px;
+    height: 100px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6d4aa9;
+    font-size: 1.3em;
+}
+
+.manage-tile:hover {
+    background-color: #c2c219;
+}
+
+.manage-users-table, .manage-users-table td, .manage-users-table th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 20px;
+    background-color: #bc9df6;
+}
+
+.capitalize-first-letter::first-letter {
+    text-transform: uppercase;
+}
+
+.user-dashboard * {
+    font-size: 25px;
+}
+
+.user-dashboard .user-name {
+    font-size: 35px;
+}
+
+.user-address {
+    margin-top: 20px;
+}
+
+.user-total-balance {
+    margin-top: 40px;
+}
+
+.accounts-container {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card-account {
+    margin-top: 20px;
+    width: 400px;
+    border: 3px solid black;
+    padding: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+    box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+}
+
+.account-type-1 {
+    background: rgb(208, 208, 47);
+    background: linear-gradient(90deg, rgba(208, 208, 47, 1) 20%, rgba(255, 255, 235, 1) 80%, rgba(186, 186, 15, 1) 97%);
+    border-color: #D0D02FFF;
+}
+
+.account-type-1 .card-account-type {
+    color: #67670f;
+}
+
+.account-type-2 {
+    background: rgb(175, 52, 221);
+    background: linear-gradient(90deg, rgba(175, 52, 221, 1) 20%, rgba(223, 207, 251, 1) 80%, rgba(146, 10, 228, 1) 97%);
+    border-color: #920AE4FF;
+}
+
+.account-type-2 .card-account-type {
+    color: #5c0b86;
+}
+
+.account-type-3 {
+    background: rgb(144, 144, 144);
+    background: linear-gradient(90deg, rgba(144, 144, 144, 1) 31%, rgba(255, 255, 255, 1) 80%, rgba(177, 177, 177, 1) 97%);
+    border-color: #909090FF;
+}
+
+.account-type-3 .card-account-type {
+    color: #414141;
+}
+
+.card-account-type {
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    font-size: 110%;
+}
+
+label {
+    font-size: 1.1em;
+}
+
+.form-container {
+    margin-top: 30px;
+}
+
+.form-container form {
+    display: flex;
+}
+
+.form-container-column > div {
+    max-width: 350px;
+    position: relative;
+}
+
+input[type="text"], input[type="password"],
+input[type="number"], input[type="email"] {
+    display: block;
+    margin: 10px 0;
+    width: 300px;
+    border-radius: 15px;
+    outline: none;
+    border: 0;
+    padding: 5px 15px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus,
+input[type="number"]:focus, input[type="email"]:focus {
+    outline: #3a246c solid 1px;
+    -webkit-box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+    box-shadow: 3px 8px 24px 10px rgba(66, 68, 90, 1);
+    border: 2px solid #c8b5f5;
+}
+
+input[type="checkbox"] {
+    position: absolute;
+    right: 25px;
+    margin-top: 6px;
+    padding: 5px;
+}
+
+.btn {
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    background-color: #a4a415;
+    color: #444409;
+    border-radius: 20px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #c9c911;
+    cursor: pointer;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-section {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+}
+
+.home-section.column {
+    flex-direction: column;
+}
+
+.home-section h1 {
+    width: 100%;
+    text-align: center;
+    text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+.home-section h1 span {
+    display: block;
+    font-size: inherit;
+    font-size: 120%;
+    color: #b9b923;
+}
+
+.home-section p {
+    font-size: 1.1em;
+    font-weight: 500;
+    padding-top: 30px;
+}
+
+.home-section .site-logo {
+    font-size: 100px;
+}
+
+.home-text-large {
+    color: #a4a415;
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+.card-account-phone-transfer {
+    position: relative;
+}
+
+.card-account-phone-transfer i{
+    position: absolute;
+    right: 10px;
+    font-size: 40px;
+}
+.user-section{
+    display: flex;
+}
+.phone-account-container, .user-data-container{
+    width: 50%;
+}
+.phone-account-container>div:nth-of-type(1)
 {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 20px;
-  background-color: #bc9df6;
+    text-align: center;
 }
-.capitalize-first-letter::first-letter{
-  text-transform: uppercase;
-}
-.user-dashboard *{
-  font-size: 25px;
+.phone-account-container .fa-mobile-screen{
+    color: purple;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.user-dashboard .user-name{
-  font-size: 35px;
-}
-.user-address{
-  margin-top: 20px;
-}
-.user-total-balance{
-  margin-top: 40px;
-}
-.accounts-container{
-  margin: 20px;
-  display: flex;
-  flex-wrap: wrap;
-}
-.card-account{
-  margin: 20px;
-  width: 400px;
+.accounts-container .fa-mobile-screen:hover{
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+    color: #5c0b86;
 }

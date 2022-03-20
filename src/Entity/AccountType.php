@@ -24,6 +24,9 @@ class AccountType
     #[ORM\OneToMany(mappedBy: 'accountType', targetEntity: Account::class)]
     private $accounts;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $cssClass;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
@@ -84,6 +87,18 @@ class AccountType
                 $account->setAccountType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCssClass(): ?string
+    {
+        return $this->cssClass;
+    }
+
+    public function setCssClass(?string $cssClass): self
+    {
+        $this->cssClass = $cssClass;
 
         return $this;
     }

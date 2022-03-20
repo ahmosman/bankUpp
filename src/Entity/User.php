@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Account::class, orphanRemoval: true)]
     private $accounts;
 
+    #[ORM\OneToOne(targetEntity: Account::class, cascade: ['persist', 'remove'])]
+    private $phoneAccount;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
@@ -243,6 +246,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $account->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneAccount(): ?Account
+    {
+        return $this->phoneAccount;
+    }
+
+    public function setPhoneAccount(?Account $phoneAccount): self
+    {
+        $this->phoneAccount = $phoneAccount;
 
         return $this;
     }

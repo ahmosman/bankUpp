@@ -1,0 +1,18 @@
+<div class="card-account {{ account.accountType.cssClass }}">
+    <div class="card-account-type">{{ account.accountType.name }}</div>
+    <div class="card-account-code">{{ account.accountCode }}</div>
+    <div class="card-account-balance">Stan konta: {{ account.balance }}zł</div>
+    <div class="card-account-transfer">
+        <a href="{{ path('app_account_transfer',{id : account.id}) }}">Wykonaj przelew</a>
+    </div>
+    <div class="card-account-phone-transfer">
+        <a href="{{ path('app_account_transfer',{id : account.id, phone: true}) }}">Przelew na
+            telefon</a>
+        {% if setPhoneAccountLink %}
+            <a href="{{ path('app_set_phone_transfer',{id: account.id}) }}"><i class="fa-solid fa-mobile-screen"></i></a>
+        {% else %}
+            <i class="fa-solid fa-mobile-screen"></i>
+        {% endif %}
+
+    </div>
+</div>
