@@ -58,7 +58,6 @@ class RegistrationController extends AbstractController
                 'postalCode' => $form->get('postalCode')->getData(),
                 'city' => $form->get('city')->getData()
             ];
-//            dump($addressArr);
             $existingAddress = $addressRepository->findExistingAddress($addressArr);
 
             if(!$existingAddress)

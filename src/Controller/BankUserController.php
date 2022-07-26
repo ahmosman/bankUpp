@@ -51,7 +51,6 @@ class BankUserController extends AbstractController
         $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
         $pager->setMaxPerPage(5);
         $pager->setCurrentPage($page);
-//        dump($pager);die();
         return $this->render('account/history.html.twig', [
             'pager' => $pager,
             'userEmail' => $this->getUser()->getUserIdentifier()

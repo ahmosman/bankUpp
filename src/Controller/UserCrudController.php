@@ -44,7 +44,6 @@ class UserCrudController extends AbstractController
                 ($typeInfo == 'użytkownik') ? 'app_banker_management' :
                     (($typeInfo == 'bankier') ? 'app_admin_management': 'app_main');
 
-        dump($this->getUser());
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
